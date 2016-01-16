@@ -5,7 +5,7 @@ var minifyCSS = require('gulp-minify-css');
 var runSequence = require('run-sequence');
 var w3cjs = require('gulp-w3cjs');
 var root_dir = '';
-var deploy_dir = '_build';
+var deploy_dir = 'dist';
  
 gulp.task('clean', function() {
 	return gulp.src([deploy_dir], { read: false })
