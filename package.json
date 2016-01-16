@@ -1,0 +1,19 @@
+{
+  "name": "aftership_test",
+  "version": "1.0.0",
+  "description": "The frontend test for after ship",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Georgios Papanikolaou",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-minify-css": "^1.2.3",
+    "gulp-minify-html": "^1.0.5",
+    "gulp-w3cjs": "^1.2.0",
+    "run-sequence": "^1.1.5"
+  }
+}
