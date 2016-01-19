@@ -9,9 +9,30 @@ body {
 	font-family: 'Merriweather', serif;
 	font-weight: 100;
 	font-size: 15px;
-
 }
 
+#message_success {
+	display:none;
+}
+#error_subject { 
+	display: none;
+}
+#error_message {
+	display: none;
+}
+
+.error{
+	background-color: red;
+	color:white;
+	padding:10px;
+	margin:10px;
+}
+.success{
+	background-color: green;
+	color:white;
+	padding:10px;
+	margin:10px;
+}
 a:link {
 	text-decoration: none;
 }

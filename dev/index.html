@@ -164,16 +164,21 @@ vehicula ut id elit.</p>
 				<div class="sidebar-message">
 					<h1> Send me a message </h1>
 					<form>
-						
-						<label for="subject"> Subject </label>
-						<input id="subject" class="form-control" type="text"/>
-	
-						<label for="message"> Message</label>
-						<textarea id="message" class="form-control"></textarea>
-						 
-						<div class="pull-right sidebar-message-remaining">0/140</div>
-						<div class="tcenter">
-							<button type="submit" class="sidebar-message-button">Send</button>
+						<div id="message_success" class="success">Your message has been send</div>
+						<div id="message_form">
+							<label for="sendmessage_subject"> Subject </label>
+							<input id="sendmessage_subject" class="form-control" type="text"/>
+		 
+							<label for="sendmessage_message"> Message</label>
+							<textarea id="sendmessage_message" class="form-control"></textarea>
+							 
+							<div class="pull-right sidebar-message-remaining"><span id="sendmessage_remaining">0</span>/140</div>
+							 
+							<div id="error_subject" class="error">Your subject is empty</div>
+							<div id="error_message" class="error">Your messasge is empty</div>
+							<div class="tcenter">
+								<button type="submit" id="sendmessage_submit" class="sidebar-message-button">Send</button>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -189,20 +194,13 @@ vehicula ut id elit.</p>
 						Tsuen Wan
 					</p>
 				</div>
-
-				 
-
-				 
-
-
 			</div>
 
 		</div>
 	</div>
 	</div>
 
-	<!-- RELATED ARTICLES -->
-	 
+	<!-- RELATED ARTICLES --> 
 	<div class="related-articles">
 	<div class="container center">
 		<h1 class="lines"><span>Related Articles</span></h1>
@@ -224,7 +222,7 @@ vehicula ut id elit.</p>
 				<div class="article-header"><img class="img-responsive" alt="Teaser 02-Rect" src="img/teaser-rect-02.jpg"></div>
 				<h1><a href="">Bibendum Sit Elit</a></h1>
 				<p>Nulla vitae elit libero,a pharetra augue.
-Curabitur blandit temput porttitor.</p>
+				   Curabitur blandit temput porttitor.</p>
 			</div>
 		</div>
 		<div class="column-4">
@@ -232,9 +230,9 @@ Curabitur blandit temput porttitor.</p>
 				<div class="article-header"><img class="img-responsive" alt="Teaser 03-Rect" src="img/teaser-rect-03.jpg"></div>
 				<h1><a href="">Malesuada Consctetur</a></h1>
 				<p>Sed posuere consectetur est at loborts.
-Maecenas faucibus mollis interdum.
-Duis mollis, estnon commodo luctus,
-nisi erat porttiro ligula, eget lacinia odio.</p>
+				   Maecenas faucibus mollis interdum.
+			       Duis mollis, estnon commodo luctus,
+				   nisi erat porttiro ligula, eget lacinia odio.</p>
 			</div>
 		</div>
 	</div>
@@ -244,8 +242,8 @@ nisi erat porttiro ligula, eget lacinia odio.</p>
 				<div class="article-header"><img class="img-responsive" alt="Teaser 04-Rect" src="img/teaser-rect-04.jpg"></div>
 				<h1><a href="">Inceptos Justo Tristique Fringilla</a></h1>
 				<p>Nullam quis risus eget urna mollis
-ornare vel eu leo. Praesent commodo
-cursus magna, vel scelirisque nisi.</p>
+				   ornare vel eu leo. Praesent commodo
+				 cursus magna, vel scelirisque nisi.</p>
 			</div>
 		</div>
 		<div class="column-4">
@@ -263,6 +261,7 @@ cursus magna, vel scelirisque nisi.</p>
 	</div>		
 	</div>
 
+	<!-- FOOTER -->
 	<footer>
 		<div class="container center">
 		<div class="inner-footer">
@@ -293,16 +292,71 @@ cursus magna, vel scelirisque nisi.</p>
 				<li><a href="">Fermentum</a></li>
 				<li><a href="">Etiam potta sem malesuada</a></li>
 			</ul>
- 
-
-
-
 		</div>
 		</div>
 		</div>
 	</div>
-
 	</footer>
+
+	<!-- SCRIPTS -->
+	<script src="js/jquery-1.12.0.min.js"></script>
+	<script>
+		$("#sendmessage_message").keydown(function(e){
+			var value = 140 - $(this).val().length;
+			if (value <= -1 ){
+				e.preventDefault();
+				return;
+			}
+			$("#sendmessage_remaining").html(value);
+		})
+
+		$("#sendmessage_submit").click(function(e){
+			e.preventDefault();
+			console.log("clickedHere");
+			var subject = $("#sendmessage_subject").val();
+			var message = $("#sendmessage_message").val();
+
+			//Validate data
+			$("#error_subject").css("display","none");
+			$("#error_message").css("display","none");
+			var errors = false;
+			if (subject.length<=0){
+				$("#error_subject").css("display","block");
+				errors = true;
+			}
+			if (message.length<=0 || message.length > 140){
+				$("#error_message").css("display","block");
+				errors = true;
+			}
+			if (!errors){
+				sendMessage(subject,message);
+			} else {
+
+			}
+		})
+
+		function sendMessage(subject, message){
+
+			$("#message_success").slideDown();
+			$("#message_form").slideUp();
+			return;
+			var request = $.ajax({
+			  url: "sendmessage.php",
+			  method: "POST",
+			  data: { subject: subject, message: message },
+			});
+			 
+			request.done(function( msg ) {
+			  $("#message_success").css("display","block");
+			  $("#message_fail").css("display","none");
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  $("#message_fail").css("display","block");
+			  $("#message_success").css("display","none");
+			});
+		}
+	</script>
  
 
 </body>
